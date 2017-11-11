@@ -8,6 +8,8 @@ public class SeedGrowUp : MonoBehaviour {
     public float explodeTime;
     private float x = 0;
     private float scale = 1;
+    private float sinusAngle = 0;
+    private float sinusAngleStop = Mathf.PI*4;
     public float maxSize;
 	// Use this for initialization
 	void Start () {
@@ -19,9 +21,12 @@ public class SeedGrowUp : MonoBehaviour {
     {
 
         if (explodeTime > 0) {
+            // Waiting for explosion (countdown using explodeTime--)  
             float y = getScale(x, 1);
 
             transform.localScale = new Vector3(y, y, y);
+
+            //Scale all children too...
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).transform.localScale = new Vector3(y, y, y);
@@ -32,6 +37,12 @@ public class SeedGrowUp : MonoBehaviour {
         }
         else
         {
+            // explodeTime reached zero, so time to swell
+            if (sinusAngle < sinusAngleStop)
+            {
+                //add oscillating code here
+            }
+
             if (scale < maxSize)
             {
                 scale += (float)(1.0 / 20);
