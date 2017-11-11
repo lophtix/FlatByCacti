@@ -22,6 +22,10 @@ public class SeedGrowUp : MonoBehaviour {
             float y = getScale(x, 1);
 
             transform.localScale = new Vector3(y, y, y);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).transform.localScale = new Vector3(y, y, y);
+            }
 
             if (x < 1) { x += (float) (1.0 / growUpTime); }
             explodeTime--;
@@ -35,6 +39,11 @@ public class SeedGrowUp : MonoBehaviour {
             }
             else
             {
+                for (int i = 0; i < transform.childCount; i++)
+                {
+                    Destroy(transform.GetChild(i));
+                }
+                
                 Destroy(gameObject);
             }
         }
