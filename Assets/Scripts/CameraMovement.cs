@@ -18,22 +18,27 @@ public class CameraMovement : MonoBehaviour {
         float z = GameObject.FindObjectOfType<BalloonMovement>().transform.position.z;
 
         float rot = transform.eulerAngles.y;
+        BalloonMovement balloon = GameObject.FindObjectOfType<BalloonMovement>();
 
-        if (x > 0 && z > 0)
+        if (x > 0 && z > 0 && GoalAngle == 90)
         {
             GoalAngle = 180;
+            balloon.switchControls();
         }
-        else if (x <= 0 && z > 0)
+        else if (x <= 0 && z > 0 && GoalAngle == 0)
         {
             GoalAngle = 90;
+            balloon.switchControls();
         }
-        else if (x <= 0 && z <= 0)
+        else if (x <= 0 && z <= 0 && GoalAngle == 270)
         {
             GoalAngle = 0;
+            balloon.switchControls();
         }
-        else
+        else if (x > 0 && z <= 0 && GoalAngle == 180)
         {
             GoalAngle = 270;
+            balloon.switchControls();
         }
 
         float newRot = Mathf.LerpAngle(rot, GoalAngle, Time.deltaTime * speed);
