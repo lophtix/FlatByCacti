@@ -5,6 +5,7 @@ using UnityEngine;
 public class SeedDisappear : MonoBehaviour {
 
     public GameObject cacti;
+    public GameObject cactiArm;
     public float time = 30;
     private float x = 0;
     // Use this for initialization
@@ -27,6 +28,7 @@ public class SeedDisappear : MonoBehaviour {
             cacti.transform.position = transform.position;
             cacti.transform.localScale = new Vector3(0, 0, 0);
             Instantiate(cacti);
+
             Destroy(gameObject);
         }
 
