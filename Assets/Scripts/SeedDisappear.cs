@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SeedDisappear : MonoBehaviour {
 
-    public GameObject cacti;
+    public GameObject cactus1, cactus2;
     public GameObject cactiArm;
     public float time = 30;
     private float x = 0;
@@ -25,6 +25,16 @@ public class SeedDisappear : MonoBehaviour {
         if (x < 1) { x += (float)(1.0 / time); }
         else
         {
+            GameObject cacti;
+            if (Random.Range(0, 2) == 1)
+            {
+                cacti = cactus1;
+            }
+            else
+            {
+                cacti = cactus2;
+            }
+
             cacti.transform.position = transform.position;
             cacti.transform.localScale = new Vector3(0, 0, 0);
             Instantiate(cacti);
