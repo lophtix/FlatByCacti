@@ -29,26 +29,6 @@ public class SeedDisappear : MonoBehaviour {
             cacti.transform.localScale = new Vector3(0, 0, 0);
             Instantiate(cacti);
 
-            float rot = 0;
-            int arms = 0;
-            float startRotation = Random.Range(0, 360);
-
-            print(Random.Range(0, arms + 2));
-
-            for (int i = 0; i < 4; i++) {
-
-                if (Mathf.Round(Random.Range(0, arms + 2)) == 1)
-                {
-                    arms++;
-                    cactiArm.transform.rotation = Quaternion.Euler(0, (startRotation + rot) % 360, 0);
-                    cactiArm.transform.localScale = new Vector3(0, 0, 0);
-                    Instantiate(cactiArm, cacti.transform);
-
-                }
-
-                rot += 90;
-
-            }
             Destroy(gameObject);
         }
 
