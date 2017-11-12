@@ -34,16 +34,11 @@ public class SeedGrowUp : MonoBehaviour {
         {
             if (scale < maxSize)
             {
-                scale += (float)(1.0 / 20);
+                scale += (float)(1.0 / 10);
                 transform.localScale = new Vector3(scale, 1, scale);
             }
             else
             {
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    Destroy(transform.GetChild(i));
-                }
-                
                 Destroy(gameObject);
             }
         }
