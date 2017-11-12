@@ -6,9 +6,10 @@ public class WindManager : MonoBehaviour {
 
     public int mouseButton;
     public float force;
+    public float maxBuildUp;
     private float timePassed;
     private float mouseX;
-    private float mouseZ;
+    private float mouseY;
     private GameObject[] seeds;
 
     // Use this for initialization
@@ -22,39 +23,37 @@ public class WindManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(mouseButton))
         {
             mouseX = Input.mousePosition.x;
-            mouseZ = Input.mousePosition.z;
+            mouseY = Input.mousePosition.y;
         }
-        else if (Input.GetMouseButton(mouseButton) && timePassed < 3)
+        else if (Input.GetMouseButton(mouseButton) && timePassed < maxBuildUp)
         {
             timePassed += Time.deltaTime;
-            print(timePassed);
+            arrow(mouseX, mouseY);
         }
-        else if (Input.GetMouseButtonUp(mouseButton) || timePassed > 3)
+        else if (Input.GetMouseButtonUp(mouseButton) || timePassed > maxBuildUp)
         {
             int quadrant = (int) GameObject.FindObjectOfType<CameraMovement>().GoalAngle / 90;
             Vector3 direction;
-            float hyp = Mathf.Sqrt(Mathf.Pow((mouseX - Input.mousePosition.x), 2) + Mathf.Pow((mouseZ - Input.mousePosition.z), 2));
+            float hyp = Mathf.Sqrt(Mathf.Pow((mouseX - Input.mousePosition.x), 2) + Mathf.Pow((mouseY - Input.mousePosition.y), 2));
 
             if (quadrant == 3)
             {
-                direction = new Vector3(mouseX - Input.mousePosition.x, 0.0f, mouseZ - Input.mousePosition.z);
+                direction = new Vector3(mouseX - Input.mousePosition.x, 0.0f, mouseY - Input.mousePosition.y);
             }
             else if (quadrant == 0)
             {
-                direction = new Vector3(mouseZ - Input.mousePosition.z, 0.0f, -(mouseX - Input.mousePosition.x));
+                direction = new Vector3(mouseY - Input.mousePosition.y, 0.0f, -(mouseX - Input.mousePosition.x));
             }
             else if (quadrant == 1)
             {
-                direction = new Vector3(-(mouseX - Input.mousePosition.x), 0.0f, -(mouseZ - Input.mousePosition.z));
+                direction = new Vector3(-(mouseX - Input.mousePosition.x), 0.0f, -(mouseY - Input.mousePosition.y));
             }
             else
             {
-                direction = new Vector3(-(mouseZ - Input.mousePosition.z), 0.0f, mouseX - Input.mousePosition.x);
+                direction = new Vector3(-(mouseY - Input.mousePosition.y), 0.0f, mouseX - Input.mousePosition.x);
             }
 
             direction = direction / hyp;
-
-            print(direction.magnitude);
 
             for (int i = 0; i < seeds.Length; i++)
             {
@@ -70,5 +69,37 @@ public class WindManager : MonoBehaviour {
             timePassed = 0;
         }
 
+    }
+
+    void arrow(float startX, float startY)
+    {
+        GameObject arrow = GameObject.Find("Arrow");
+
+        Ray startRay = Camera.main.ScreenPointToRay(new Vector3(startX, startY));
+        RaycastHit startHit;
+
+        Ray nowRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit nowHit;
+
+        Vector3 center = new Vector3();
+
+        if (Physics.Raycast(startRay, out startHit, 200))
+        {
+            if (Physics.Raycast(nowRay, out nowHit, 200)){
+
+                center.x = findCenter(startHit.point.x, nowHit.point.x);
+                center.y = (float)0.5;
+                center.z = findCenter(startHit.point.z, nowHit.point.z);
+
+                arrow.transform.position = center;
+            }
+        }
+
+
+   }
+
+    private float findCenter(float x1, float x2)
+    {
+        return (x1 + x2) / 2;
     }
 }
