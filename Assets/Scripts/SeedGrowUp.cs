@@ -9,7 +9,7 @@ public class SeedGrowUp : MonoBehaviour {
     private float x = 0;
     private float scale = 1;
     private float sinusAngle = 0;
-    private float sinusAngleStop = Mathf.PI*4;
+    public float sinusAngleStop = Mathf.PI*4;
     public float maxSize;
 	// Use this for initialization
 	void Start () {
@@ -40,22 +40,30 @@ public class SeedGrowUp : MonoBehaviour {
             // explodeTime reached zero, so time to swell
             if (sinusAngle < sinusAngleStop)
             {
-                //add oscillating code here
-            }
-
-            if (scale < maxSize)
-            {
-                scale += (float)(1.0 / 20);
-                transform.localScale = new Vector3(scale, 1, scale);
-            }
-            else
-            {
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    Destroy(transform.GetChild(i));
-                }
                 
-                Destroy(gameObject);
+                //add oscillating code here
+                scale += 0.01f * Mathf.Sin(sinusAngle);
+                transform.localScale = new Vector3(scale, 1, scale);
+                print("sin " + sinusAngle +" scale "+ scale);
+                sinusAngle += 0.1f;
+            } else
+            {
+                if (scale < maxSize)
+                {
+                    //scale += (float)(1.0 / 20);
+                    scale += 0.5f;
+                    transform.localScale = new Vector3(scale, 1, scale);
+                }
+                else
+                {
+                    for (int i = 0; i < transform.childCount; i++)
+                    {
+                        Destroy(transform.GetChild(i));
+                    }
+
+                    Destroy(gameObject);
+                }
+
             }
         }
 
