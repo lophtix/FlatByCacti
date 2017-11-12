@@ -22,7 +22,7 @@ public class SeedDisappear : MonoBehaviour {
 
         transform.localScale = new Vector3(y, y, y);
 
-        if (x < 1) { x += (float)(1.0 / time); }
+        if (x < 1) { x += (float)(1.0 / time * Time.deltaTime * 60); }
         else
         {
             GameObject cacti;
@@ -37,7 +37,10 @@ public class SeedDisappear : MonoBehaviour {
 
             cacti.transform.position = transform.position;
             cacti.transform.localScale = new Vector3(0, 0, 0);
+            cacti.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             Instantiate(cacti);
+
+            GameObject.FindObjectOfType<MouseRaycast>().returnSeed();
 
             Destroy(gameObject);
         }
