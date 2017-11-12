@@ -88,7 +88,7 @@ public class BalloonMovement: MonoBehaviour {
     public void addEatSeedPoints()
     {
         GameObject.Find("Score").GetComponent<Text>().text = "Balloon score: " + score;
-        score += eatSeedPoints;
+        score -= eatSeedPoints;
 
         SoundManager.instance.PlaySingle(eatingSound);
     }

@@ -15,7 +15,7 @@ public class MainTitleTimer : MonoBehaviour {
 	void Update () {
         time -= Time.deltaTime;
 
-        if(time < 0)
+        if(time < 0 || Input.anyKeyDown)
         {
             SceneManager.LoadScene("Main Scene");
         }
