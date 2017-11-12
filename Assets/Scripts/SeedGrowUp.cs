@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,7 @@ public class SeedGrowUp : MonoBehaviour {
 
     public float growUpTime;
     public float explodeTime;
+    public float shakeTime;
     private float x = 0;
     private float scale = 1;
     private float sinusAngle = 0;
@@ -26,14 +27,8 @@ public class SeedGrowUp : MonoBehaviour {
 
             transform.localScale = new Vector3(y, y, y);
 
-            //Scale all children too...
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).transform.localScale = new Vector3(y, y, y);
-            }
-
-            if (x < 1) { x += (float) (1.0 / growUpTime); }
-            explodeTime--;
+            if (x < 1) { x += (float) (Time.deltaTime * growUpTime); }
+            explodeTime -= Time.deltaTime;
         }
         else
         {
@@ -45,7 +40,7 @@ public class SeedGrowUp : MonoBehaviour {
                 scale += 0.01f * Mathf.Sin(sinusAngle);
                 transform.localScale = new Vector3(scale, 1, scale);
                 print("sin " + sinusAngle +" scale "+ scale);
-                sinusAngle += 0.1f;
+                sinusAngle += Time.deltaTime * shakeTime;
             } else
             {
                 if (scale < maxSize)
