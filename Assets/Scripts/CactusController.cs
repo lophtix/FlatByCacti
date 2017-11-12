@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CactusController : MonoBehaviour {
 
+    public AudioClip bang;
+
 	// Use this for initialization
 	void Start () {
         
@@ -20,6 +22,7 @@ public class CactusController : MonoBehaviour {
         {
             GameObject.Find("WinScreen").GetComponent<Text>().text = "The Cacti Won!";
             Time.timeScale = 0.0f;
+            SoundManager.instance.PlaySingle(bang);
             Destroy(other.gameObject);
         }
     }
