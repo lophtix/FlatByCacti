@@ -18,6 +18,7 @@ public class DestroySeeds : MonoBehaviour {
     {
         if (other.gameObject.Equals(GameObject.FindObjectOfType<BalloonMovement>().gameObject))
         {
+            GameObject.FindObjectOfType<MouseRaycast>().destroySeed();
             Destroy(gameObject);
         }
     }
