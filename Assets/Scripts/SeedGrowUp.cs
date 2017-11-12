@@ -12,6 +12,7 @@ public class SeedGrowUp : MonoBehaviour {
     private float sinusAngle = 0;
     public float sinusAngleStop = Mathf.PI*4;
     public float maxSize;
+    public float maxSizeTime;
 	// Use this for initialization
 	void Start () {
 		
@@ -39,14 +40,14 @@ public class SeedGrowUp : MonoBehaviour {
                 //add oscillating code here
                 scale += 0.01f * Mathf.Sin(sinusAngle);
                 transform.localScale = new Vector3(scale, 1, scale);
-                print("sin " + sinusAngle +" scale "+ scale);
+                //print("sin " + sinusAngle +" scale "+ scale);
                 sinusAngle += Time.deltaTime * shakeTime;
             } else
             {
                 if (scale < maxSize)
                 {
                     //scale += (float)(1.0 / 20);
-                    scale += 0.5f;
+                    scale += maxSizeTime * Time.deltaTime;
                     transform.localScale = new Vector3(scale, 1, scale);
                 }
                 else

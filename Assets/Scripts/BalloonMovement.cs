@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BalloonMovement: MonoBehaviour {
 
@@ -16,6 +17,11 @@ public class BalloonMovement: MonoBehaviour {
     private KeyCode left = KeyCode.A;
 
     public float GoalRotation = 0;
+    public float score = 0;
+    private float counter;
+    public float scorePerSecond = 1;
+    public float eatSeedPoints = 50;
+    public AudioClip eatingSound;
 
     void Start () {
         rb = GetComponent<Rigidbody>();
@@ -23,6 +29,17 @@ public class BalloonMovement: MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        counter += Time.deltaTime;
+
+        if (counter > scorePerSecond)
+        {
+            score++;
+            GameObject.Find("Score").GetComponent<Text>().text = "Balloon score: " + score;
+            counter = 0;
+        }
+        
+
 
         transform.position = new Vector3(transform.position.x, 1, transform.position.z);
 
@@ -66,5 +83,13 @@ public class BalloonMovement: MonoBehaviour {
         forward = temp;
 
         GoalRotation = (GoalRotation + 90) % 360;
+    }
+
+    public void addEatSeedPoints()
+    {
+        GameObject.Find("Score").GetComponent<Text>().text = "Balloon score: " + score;
+        score += eatSeedPoints;
+
+        SoundManager.instance.PlaySingle(eatingSound);
     }
 }

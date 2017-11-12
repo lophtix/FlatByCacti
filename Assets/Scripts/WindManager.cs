@@ -31,7 +31,31 @@ public class WindManager : MonoBehaviour {
         }
         else if (Input.GetMouseButtonUp(mouseButton) || timePassed > 3)
         {
-            Vector3 direction = new Vector3(Mathf.Sign(mouseX - Input.mousePosition.x), 0.0f, Mathf.Sign(mouseZ - Input.mousePosition.z)); //gives magnitude?
+            int quadrant = (int) GameObject.FindObjectOfType<CameraMovement>().GoalAngle / 90;
+            Vector3 direction;
+            float hyp = Mathf.Sqrt(Mathf.Pow((mouseX - Input.mousePosition.x), 2) + Mathf.Pow((mouseZ - Input.mousePosition.z), 2));
+
+            if (quadrant == 3)
+            {
+                direction = new Vector3(mouseX - Input.mousePosition.x, 0.0f, mouseZ - Input.mousePosition.z);
+            }
+            else if (quadrant == 0)
+            {
+                direction = new Vector3(mouseZ - Input.mousePosition.z, 0.0f, -(mouseX - Input.mousePosition.x));
+            }
+            else if (quadrant == 1)
+            {
+                direction = new Vector3(-(mouseX - Input.mousePosition.x), 0.0f, -(mouseZ - Input.mousePosition.z));
+            }
+            else
+            {
+                direction = new Vector3(-(mouseZ - Input.mousePosition.z), 0.0f, mouseX - Input.mousePosition.x);
+            }
+
+            direction = direction / hyp;
+
+            print(direction.magnitude);
+
             for (int i = 0; i < seeds.Length; i++)
             {
                 seeds[i].GetComponent<Rigidbody>().AddForce(direction * timePassed * timePassed * force);
