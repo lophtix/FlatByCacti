@@ -18,5 +18,9 @@ public class ReloadScene : MonoBehaviour {
             SceneManager.LoadScene(currentScene);
             Time.timeScale = 1.0f;
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Application.LoadLevel("Title Scene");
+        }
     }
 }

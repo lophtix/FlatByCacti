@@ -28,7 +28,7 @@ public class WindManager : MonoBehaviour {
         else if (Input.GetMouseButton(mouseButton) && timePassed < maxBuildUp)
         {
             timePassed += Time.deltaTime;
-            arrow(mouseX, mouseY);
+            //arrow(mouseX, mouseY);
         }
         else if (Input.GetMouseButtonUp(mouseButton) || timePassed > maxBuildUp)
         {
@@ -70,7 +70,7 @@ public class WindManager : MonoBehaviour {
         }
 
     }
-
+    /*
     void arrow(float startX, float startY)
     {
         GameObject arrow = GameObject.Find("Arrow");
@@ -102,4 +102,5 @@ public class WindManager : MonoBehaviour {
     {
         return (x1 + x2) / 2;
     }
+    */
 }
